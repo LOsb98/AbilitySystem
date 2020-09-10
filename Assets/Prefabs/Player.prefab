@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5698397281672381622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7002384986184223393}
+  m_Layer: 0
+  m_Name: GroundCheckPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7002384986184223393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698397281672381622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7044642391716608076}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7044642391716608078
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,6 +43,8 @@ GameObject:
   - component: {fileID: 7044642391716608066}
   - component: {fileID: 7044642391716608067}
   - component: {fileID: 7255406997323473296}
+  - component: {fileID: 6852230258800122607}
+  - component: {fileID: 1029502343700912618}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -30,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.91, y: 0.68, z: -3.0716434}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7002384986184223393}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,7 +163,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &7255406997323473296
 MonoBehaviour:
@@ -144,4 +177,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3faa436a277d2034cb2bc750eb4e240d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityManager: {fileID: 0}
+  health: 0
+  canMove: 1
+  grounded: 0
+  moveSpeed: 5
+  jumpForce: 11
+  groundCheckPos: {fileID: 7002384986184223393}
+  groundCheckSize: {x: 0.95, y: 0.1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  rb: {fileID: 7044642391716608067}
+--- !u!114 &6852230258800122607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47ee7a3c8e2b1d41aebe68015c358c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1: {fileID: 1029502343700912618}
+  ability2: {fileID: 0}
+--- !u!114 &1029502343700912618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f28afcc1a890f4aad236e9a168a705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 0.6
+  cooldownTimer: 0
+  isActive: 0
+  dashTime: 0.4
+  dashSpeed: 8
+  dashTimer: 0

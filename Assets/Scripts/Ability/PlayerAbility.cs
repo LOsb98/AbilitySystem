@@ -4,13 +4,13 @@ using UnityEngine;
 
 public abstract class PlayerAbility : MonoBehaviour
 {
-    public PlayerController controller;
+    protected PlayerController controller;
+    public float cooldownTime;
+    public float cooldownTimer;
+    public bool isActive;
     //Abstract methods for triggering ability
-    //Child classes will use these for their own unique behaviours
     public abstract void TriggerAbility();
     public abstract void EndAbility();
-
-    public float cooldownTime;
     //public Sprite icon
 
     void Awake()

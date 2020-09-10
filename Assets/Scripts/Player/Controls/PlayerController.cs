@@ -4,23 +4,43 @@ using UnityEngine;
 
 public abstract class PlayerController : MonoBehaviour
 {
-    public AbilityCooldown abilityManager;
+    public int health;
+    public bool canMove;
+    public bool grounded;
+    public float moveSpeed;
+    public int jumpForce;
+    public Transform groundCheckPos;
+    public Vector2 groundCheckSize;
+    public LayerMask groundLayer;
+
+    private AbilityCooldown abilityManager;
     private PlayerInput controls;
     private Vector2 moveDirection;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        abilityManager = GetComponent<AbilityCooldown>();
 
         #region controls
         controls = new PlayerInput();
 
         controls.Gameplay.Move.performed += ctx =>
         {
-            moveDirection = ctx.ReadValue<Vector2>();
-            rb.velocity = (moveDirection * 5);
-            print("Moving");
+            if (canMove == true)
+            {
+                moveDirection = ctx.ReadValue<Vector2>();
+
+                if (moveDirection.x < 0)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else if (moveDirection.x > 0)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
         };
 
         controls.Gameplay.Move.canceled += ctx =>
@@ -30,8 +50,12 @@ public abstract class PlayerController : MonoBehaviour
 
         controls.Gameplay.Jump.performed += ctx =>
         {
-            //Jump code
-            print("Jump");
+            //Jumping can be done in controls since it's a one-off impulse force
+            //If adding double jump, jump can be moved to its own method
+            if (grounded == true)
+            {
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            }
         };
 
         controls.Gameplay.Attack.performed += ctx =>
@@ -42,12 +66,12 @@ public abstract class PlayerController : MonoBehaviour
 
         controls.Gameplay.Ability1.performed += ctx =>
         {
-            print("Ability1");
+            abilityManager.StartAbility1();
         };
 
         controls.Gameplay.Ability2.performed += ctx =>
         {
-            print("Ability2");
+            abilityManager.StartAbility2();
         };
 
         controls.Gameplay.Parry.performed += ctx =>
@@ -55,6 +79,51 @@ public abstract class PlayerController : MonoBehaviour
             print("Parry");
         };
         #endregion
+    }
+
+    void Update()
+    {
+        //Ground check
+        Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
+        if (groundCheck)
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        //Player movement
+        if (canMove == true)
+        {
+            //Grounded movement
+            if (grounded == true)
+            {
+                rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+            }
+            //Air movement
+            else
+            {
+                if (moveDirection.x < 0 && rb.velocity.x > moveDirection.x * moveSpeed)
+                {
+                    rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
+                }
+                else if (moveDirection.x > 0 && rb.velocity.x < moveDirection.x * moveSpeed)
+                {
+                    rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
+                }
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 
     void OnEnable()
@@ -65,10 +134,5 @@ public abstract class PlayerController : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
-    }
-
-    void Update()
-    {
-
     }
 }
