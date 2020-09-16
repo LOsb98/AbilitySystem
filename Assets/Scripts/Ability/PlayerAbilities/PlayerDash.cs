@@ -8,12 +8,16 @@ public class PlayerDash : PlayerAbility
     public float dashSpeed;
     [SerializeField]
     private float dashTimer;
+    private RigidbodyConstraints2D originalConstraints;
 
     public override void TriggerAbility()
     {
         print("Start dash ability");
+        originalConstraints = controller.rb.constraints;
+        controller.rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         dashTimer = dashTime;
         controller.canMove = false;
+        controller.canAttack = false;
         isActive = true;
     }
 
@@ -32,9 +36,11 @@ public class PlayerDash : PlayerAbility
 
     public override void EndAbility()
     {
+        controller.rb.constraints = originalConstraints;
         dashTimer = 0;
         cooldownTimer = cooldownTime;
         controller.canMove = true;
+        controller.canAttack = true;
         isActive = false;
     }
 }

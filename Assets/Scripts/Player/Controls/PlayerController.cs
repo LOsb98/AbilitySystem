@@ -6,6 +6,7 @@ public abstract class PlayerController : MonoBehaviour
 {
     public int health;
     public bool canMove;
+    public bool canAttack;
     public bool grounded;
     public float moveSpeed;
     public int jumpForce;
@@ -15,6 +16,7 @@ public abstract class PlayerController : MonoBehaviour
 
     private AbilityCooldown abilityManager;
     private PlayerInput controls;
+    private PlayerMelee meleeController;
     private Vector2 moveDirection;
     public Rigidbody2D rb;
 
@@ -22,6 +24,7 @@ public abstract class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         abilityManager = GetComponent<AbilityCooldown>();
+        meleeController = GetComponent<PlayerMelee>();
 
         #region controls
         controls = new PlayerInput();
@@ -60,8 +63,11 @@ public abstract class PlayerController : MonoBehaviour
 
         controls.Gameplay.Attack.performed += ctx =>
         {
-            //Attack code
-            print("Attack");
+            if (canAttack)
+            {
+                //Basic melee input will use a method in the melee controller to check whether an attack can be performed
+                meleeController.Attack();
+            }
         };
 
         controls.Gameplay.Ability1.performed += ctx =>

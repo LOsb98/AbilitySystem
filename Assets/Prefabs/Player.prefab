@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7255406997323473296}
   - component: {fileID: 6852230258800122607}
   - component: {fileID: 1029502343700912618}
+  - component: {fileID: 796421365209455098}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,7 +182,7 @@ MonoBehaviour:
   canMove: 1
   grounded: 0
   moveSpeed: 5
-  jumpForce: 11
+  jumpForce: 7
   groundCheckPos: {fileID: 7002384986184223393}
   groundCheckSize: {x: 0.95, y: 0.1}
   groundLayer:
@@ -220,3 +221,20 @@ MonoBehaviour:
   dashTime: 0.4
   dashSpeed: 8
   dashTimer: 0
+--- !u!114 &796421365209455098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3c1c307f4345a4dbb0c7599e5411b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxArray:
+  - {fileID: 11400000, guid: 17cce883b444b884baa92496d3fec8f3, type: 2}
+  - {fileID: 11400000, guid: af46e8e87e4b45a4298bb460b4a0b5a8, type: 2}
+  - {fileID: 11400000, guid: d980ce1a2419a0b4393f2806c26ef6ab, type: 2}
+  delayTimerStart: 0.7
