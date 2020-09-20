@@ -18,8 +18,8 @@ public class Entity : MonoBehaviour
         health -= damage;
     }
 
-    public void Knockback(Vector2 knockback)
+    public void Knockback(Vector2 knockback, float direction)
     {
-        rb.velocity = knockback;
+        rb.velocity = new Vector2(knockback.x * direction, knockback.y);
     }
 }

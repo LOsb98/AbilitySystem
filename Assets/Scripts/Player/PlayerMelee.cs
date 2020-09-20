@@ -18,7 +18,7 @@ public class PlayerMelee : MonoBehaviour
     public LayerMask enemyLayer;
 
     private Vector2 debugPos;
-    private float debugSize;
+    private Vector2 debugSize;
 
     void Update()
     {
@@ -44,10 +44,11 @@ public class PlayerMelee : MonoBehaviour
             currentAttack = 0;
         }
 
-        Collider2D[] attackArea = Physics2D.OverlapCircleAll(AsVector2(transform.position) + attackPos, hitboxArray[currentAttack].size, enemyLayer);
+        Collider2D[] attackArea = Physics2D.OverlapBoxAll(AsVector2(transform.position) + attackPos, hitboxArray[currentAttack].size, 0.0f, enemyLayer);
         for (int i = 0; i < attackArea.Length; i++)
         {
-            print("Hit enemy");
+            attackArea[i].GetComponent<Entity>().TakeDamage(hitboxArray[currentAttack].damage);
+            attackArea[i].GetComponent<Entity>().Knockback(hitboxArray[currentAttack].knockback, transform.localScale.x);
         }
         Debug();
 
@@ -76,6 +77,6 @@ public class PlayerMelee : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(debugPos, debugSize);
+        Gizmos.DrawWireCube(debugPos, debugSize);
     }
 }

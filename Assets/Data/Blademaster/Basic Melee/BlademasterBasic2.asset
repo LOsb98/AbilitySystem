@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc50c25322c82e946b227de5ce6cb82b, type: 3}
   m_Name: BlademasterBasic2
   m_EditorClassIdentifier: 
-  damage: 100
-  size: 0.7
-  position: {x: 0.6, y: 0}
+  damage: 200
+  size: {x: 2.25, y: 1.1}
+  position: {x: 0.75, y: 0}
+  knockback: {x: 2, y: 0}
   endTime: 0.1

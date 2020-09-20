@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerHitbox : ScriptableObject
 {
     public int damage;
-    public float size;
+    public Vector2 size;
     public Vector2 position;
+    public Vector2 knockback;
     public float endTime;
 }
