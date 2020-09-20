@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7002384986184223393}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundCheckPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6852230258800122607}
   - component: {fileID: 1029502343700912618}
   - component: {fileID: 796421365209455098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   canMove: 1
+  canAttack: 1
   grounded: 0
   moveSpeed: 5
   jumpForce: 7
@@ -237,4 +238,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17cce883b444b884baa92496d3fec8f3, type: 2}
   - {fileID: 11400000, guid: af46e8e87e4b45a4298bb460b4a0b5a8, type: 2}
   - {fileID: 11400000, guid: d980ce1a2419a0b4393f2806c26ef6ab, type: 2}
+  currentAttack: 0
   delayTimerStart: 0.7
+  delayTimer: 0
+  endTimer: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024

@@ -55,9 +55,9 @@ public abstract class PlayerController : MonoBehaviour
         {
             //Jumping can be done in controls since it's a one-off impulse force
             //If adding double jump, jump can be moved to its own method
-            if (grounded == true)
+            if (grounded)
             {
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                rb.velocity = new Vector2(0, jumpForce);
             }
         };
 
@@ -91,39 +91,36 @@ public abstract class PlayerController : MonoBehaviour
     {
         //Ground check
         Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
-        if (groundCheck)
-        {
-            grounded = true;
-        }
-        else
+        if (!groundCheck)
         {
             grounded = false;
+            return;
         }
+        grounded = true;
     }
 
     void FixedUpdate()
     {
-        //Player movement
-        if (canMove == true)
+        //Player movement check
+        if (!canMove) return;
+
+        //Grounded movement
+        if (grounded == true)
         {
-            //Grounded movement
-            if (grounded == true)
-            {
-                rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
-            }
-            //Air movement
-            else
-            {
-                if (moveDirection.x < 0 && rb.velocity.x > moveDirection.x * moveSpeed)
-                {
-                    rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
-                }
-                else if (moveDirection.x > 0 && rb.velocity.x < moveDirection.x * moveSpeed)
-                {
-                    rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
-                }
-            }
+            rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+            return;
         }
+
+        //Air movement
+        if (moveDirection.x < 0 && rb.velocity.x > moveDirection.x * moveSpeed)
+        {
+            rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
+        }
+        else if (moveDirection.x > 0 && rb.velocity.x < moveDirection.x * moveSpeed)
+        {
+            rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
+        }
+
     }
 
     void OnDrawGizmosSelected()

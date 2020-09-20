@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BlademasterBasic1
   m_EditorClassIdentifier: 
   damage: 100
-  size: 0.5
-  position: {x: 0.3, y: 0}
+  size: 0.6
+  position: {x: 0.5, y: 0}
   endTime: 0.1
