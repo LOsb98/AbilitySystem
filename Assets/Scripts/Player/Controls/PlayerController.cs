@@ -17,12 +17,14 @@ public abstract class PlayerController : MonoBehaviour
     private AbilityCooldown abilityManager;
     private PlayerInput controls;
     private PlayerMelee meleeController;
+    private MoveController movementController;
     private Vector2 moveDirection;
     public Rigidbody2D rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        movementController = GetComponent<MoveController>();
         abilityManager = GetComponent<AbilityCooldown>();
         meleeController = GetComponent<PlayerMelee>();
 
@@ -31,19 +33,18 @@ public abstract class PlayerController : MonoBehaviour
 
         controls.Gameplay.Move.performed += ctx =>
         {
-            if (canMove == true)
-            {
-                moveDirection = ctx.ReadValue<Vector2>();
+            moveDirection = ctx.ReadValue<Vector2>();
+            if (!canMove) return;
 
-                if (moveDirection.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-                else if (moveDirection.x > 0)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
+            if (moveDirection.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
             }
+            else if (moveDirection.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
         };
 
         controls.Gameplay.Move.canceled += ctx =>
@@ -57,7 +58,7 @@ public abstract class PlayerController : MonoBehaviour
             //If adding double jump, jump can be moved to its own method
             if (grounded)
             {
-                rb.velocity = new Vector2(0, jumpForce);
+                movementController.Jump(rb, jumpForce);
             }
         };
 
@@ -107,19 +108,12 @@ public abstract class PlayerController : MonoBehaviour
         //Grounded movement
         if (grounded == true)
         {
-            rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+            movementController.Move(rb, moveDirection.x, moveSpeed);
             return;
         }
 
         //Air movement
-        if (moveDirection.x < 0 && rb.velocity.x > moveDirection.x * moveSpeed)
-        {
-            rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
-        }
-        else if (moveDirection.x > 0 && rb.velocity.x < moveDirection.x * moveSpeed)
-        {
-            rb.AddForce(new Vector2(moveDirection.x * moveSpeed, 0), ForceMode2D.Force);
-        }
+        movementController.AirMove(rb, moveDirection.x, moveSpeed);
 
     }
 
