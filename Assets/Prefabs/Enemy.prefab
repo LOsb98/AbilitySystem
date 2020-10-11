@@ -188,6 +188,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
+  staggerTimer: 0
 --- !u!114 &2686958954788800236
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,11 +42,12 @@ GameObject:
   - component: {fileID: 7044642391716608077}
   - component: {fileID: 7044642391716608066}
   - component: {fileID: 7044642391716608067}
-  - component: {fileID: 7255406997323473296}
+  - component: {fileID: 7922082157321564706}
   - component: {fileID: 6852230258800122607}
   - component: {fileID: 1029502343700912618}
   - component: {fileID: 796421365209455098}
   - component: {fileID: 1091866055757547505}
+  - component: {fileID: 8245824628102852072}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -167,7 +168,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7255406997323473296
+--- !u!114 &7922082157321564706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,21 +177,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7044642391716608078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3faa436a277d2034cb2bc750eb4e240d, type: 3}
+  m_Script: {fileID: 11500000, guid: adfc91fba593a28419bf83a884c57130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 2000
   canMove: 1
   canAttack: 1
   grounded: 0
-  moveSpeed: 5
-  jumpForce: 7
+  moveSpeed: 7
+  jumpForce: 5
   groundCheckPos: {fileID: 7002384986184223393}
-  groundCheckSize: {x: 0.95, y: 0.1}
+  groundCheckSize: {x: 0.95, y: 0.05}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  rb: {fileID: 7044642391716608067}
+  rb: {fileID: 0}
 --- !u!114 &6852230258800122607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,3 +259,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dec4d226b37bf4f9cfddedf79fb1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &8245824628102852072
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5131d469a8f50b34a9fcc7077fd935c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

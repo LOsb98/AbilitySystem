@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public int health;
     public bool canMove;
@@ -18,7 +18,8 @@ public abstract class PlayerController : MonoBehaviour
     private PlayerInput controls;
     private PlayerMelee meleeController;
     private MoveController movementController;
-    private Vector2 moveDirection;
+    public Vector2 moveDirection;
+    private Animator animator;
     public Rigidbody2D rb;
 
     void Awake()
@@ -27,6 +28,7 @@ public abstract class PlayerController : MonoBehaviour
         movementController = GetComponent<MoveController>();
         abilityManager = GetComponent<AbilityCooldown>();
         meleeController = GetComponent<PlayerMelee>();
+        animator = GetComponent<Animator>();
 
         #region controls
         controls = new PlayerInput();
@@ -34,22 +36,13 @@ public abstract class PlayerController : MonoBehaviour
         controls.Gameplay.Move.performed += ctx =>
         {
             moveDirection = ctx.ReadValue<Vector2>();
-            if (!canMove) return;
-
-            if (moveDirection.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (moveDirection.x > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-
+            animator.SetFloat("MoveDirection", moveDirection.x);
         };
 
         controls.Gameplay.Move.canceled += ctx =>
         {
             moveDirection = Vector2.zero;
+            animator.SetFloat("MoveDirection", moveDirection.x);
         };
 
         controls.Gameplay.Jump.performed += ctx =>
@@ -58,6 +51,7 @@ public abstract class PlayerController : MonoBehaviour
             //If adding double jump, jump can be moved to its own method
             if (grounded)
             {
+                animator.SetTrigger("Jumped");
                 movementController.Jump(rb, jumpForce);
             }
         };
@@ -92,28 +86,25 @@ public abstract class PlayerController : MonoBehaviour
     {
         //Ground check
         Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
-        if (!groundCheck)
-        {
-            grounded = false;
-            return;
-        }
-        grounded = true;
+        if (groundCheck) grounded = true;
+        else grounded = false;
+        animator.SetBool("Grounded", grounded);
     }
 
     void FixedUpdate()
     {
-        //Player movement check
-        if (!canMove) return;
+        ////Player movement check
+        //if (!canMove) return;
 
-        //Grounded movement
-        if (grounded == true)
-        {
-            movementController.Move(rb, moveDirection.x, moveSpeed);
-            return;
-        }
+        ////Grounded movement
+        //if (grounded == true)
+        //{
+        //    movementController.Move(rb, moveDirection.x, moveSpeed);
+        //    return;
+        //}
 
-        //Air movement
-        movementController.AirMove(rb, moveDirection.x, moveSpeed);
+        ////Air movement
+        //movementController.AirMove(rb, moveDirection.x, moveSpeed);
 
     }
 

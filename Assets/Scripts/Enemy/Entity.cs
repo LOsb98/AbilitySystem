@@ -15,6 +15,8 @@ public class Entity : MonoBehaviour
     public Vector2 groundCheckSize;
     public LayerMask groundLayer;
     public LayerMask playerLayer;
+    [SerializeField]
+    private float staggerTimer;
 
     void Awake()
     {
@@ -24,6 +26,8 @@ public class Entity : MonoBehaviour
 
     void Update()
     {
+        if (staggerTimer > 0) staggerTimer -= Time.deltaTime;
+        animator.SetFloat("StaggerTimer", staggerTimer);
         player = GameObject.Find("Player");
         animator.SetFloat("PlayerDistance", Vector2.Distance(transform.position, player.transform.position));
         Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
@@ -38,6 +42,7 @@ public class Entity : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        staggerTimer = 0.5f;
     }
 
     public void Knockback(Vector2 knockback, float direction)

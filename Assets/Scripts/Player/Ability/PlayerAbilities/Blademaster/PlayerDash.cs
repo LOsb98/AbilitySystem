@@ -9,6 +9,12 @@ public class PlayerDash : PlayerAbility
     [SerializeField]
     private float dashTimer;
     private RigidbodyConstraints2D originalConstraints;
+    private Animator animator;
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     public override void TriggerAbility()
     {
@@ -25,13 +31,13 @@ public class PlayerDash : PlayerAbility
     {
         if (dashTimer > 0 && isActive == true)
         {
-            controller.rb.velocity = new Vector2(transform.localScale.x * dashSpeed, controller.rb.velocity.y);
             dashTimer -= Time.deltaTime;
         }
         else if (dashTimer <= 0 && isActive == true)
         {
             EndAbility();
         }
+        animator.SetFloat("DashTimer", dashTimer);
     }
 
     public override void EndAbility()

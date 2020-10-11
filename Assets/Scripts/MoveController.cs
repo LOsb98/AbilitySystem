@@ -23,6 +23,6 @@ public class MoveController : MonoBehaviour
 
     public void Jump(Rigidbody2D rb, int jumpForce)
     {
-        rb.velocity = new Vector2(0, jumpForce);
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 }
