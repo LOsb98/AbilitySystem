@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public int health;
     public bool canMove;
@@ -23,7 +23,6 @@ public abstract class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         movementController = GetComponent<MoveController>();
         abilityManager = GetComponent<AbilityCooldown>();
         meleeController = GetComponent<PlayerMelee>();
@@ -33,22 +32,13 @@ public abstract class PlayerController : MonoBehaviour
 
         controls.Gameplay.Move.performed += ctx =>
         {
+            //This input only alters the value when the value returned by the control stick is changed
             moveDirection = ctx.ReadValue<Vector2>();
-            if (!canMove) return;
-
-            if (moveDirection.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (moveDirection.x > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-
         };
 
         controls.Gameplay.Move.canceled += ctx =>
         {
+            //When the stick is returned back to neutral, moveDirection goes back to (0,0)
             moveDirection = Vector2.zero;
         };
 
@@ -67,6 +57,7 @@ public abstract class PlayerController : MonoBehaviour
             if (canAttack)
             {
                 //Basic melee input will use a method in the melee controller to check whether an attack can be performed
+                //If the player is able to run and attack at the same time there may need to be 2 objects, one for the player legs and one for the top half with the attack animation
                 meleeController.Attack();
             }
         };
@@ -90,31 +81,13 @@ public abstract class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Ground check
-        Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
-        if (!groundCheck)
-        {
-            grounded = false;
-            return;
-        }
-        grounded = true;
+        DirectionCheck();
+        GroundCheck();
     }
 
     void FixedUpdate()
     {
-        //Player movement check
-        if (!canMove) return;
-
-        //Grounded movement
-        if (grounded == true)
-        {
-            movementController.Move(rb, moveDirection.x, moveSpeed);
-            return;
-        }
-
-        //Air movement
-        movementController.AirMove(rb, moveDirection.x, moveSpeed);
-
+        PlayerMovementCheck();
     }
 
     void OnDrawGizmosSelected()
@@ -131,5 +104,50 @@ public abstract class PlayerController : MonoBehaviour
     void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    private void DirectionCheck()
+    {
+        if (!canMove) return;
+
+        if (moveDirection.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (moveDirection.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    private void GroundCheck()
+    {
+        Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
+        if (!groundCheck)
+        {
+            grounded = false;
+            return;
+        }
+        grounded = true;
+    }
+
+    private void PlayerMovementCheck()
+    {
+        if (!canMove) return;
+
+        //Grounded movement
+        if (grounded == true)
+        {
+            movementController.Move(rb, moveDirection.x, moveSpeed);
+            return;
+        }
+        //Air movement
+        movementController.AirMove(rb, moveDirection.x, moveSpeed);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        print(health);
     }
 }

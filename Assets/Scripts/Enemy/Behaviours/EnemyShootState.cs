@@ -1,15 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class EnemyShootState : StateMachineBehaviour
 {
     private GameObject player;
     private GameObject enemy;
+    public RangedWeapon weapon;
+
+    private int clip;
+    private float fireRateTimer;
+    private float reloadTimer;
 
     void Awake()
     {
         player = GameObject.Find("Player");
+        clip = weapon.clipSize;
+        fireRateTimer = weapon.fireRate;
     }
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,6 +29,21 @@ public class EnemyShootState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (player.transform.position.x < enemy.transform.position.x) enemy.transform.localScale = new Vector3(-1, 1, 1);
+        else enemy.transform.localScale = new Vector3(1, 1, 1);
+        if (reloadTimer > 0) reloadTimer -= Time.deltaTime;
+        if (fireRateTimer > 0) fireRateTimer -= Time.deltaTime;
+        if (reloadTimer <= 0 && fireRateTimer <= 0)
+        {
+            for (int i = 0; i < weapon.projectilesPerShot; i++)
+            {
+                GameObject newProjectile = Instantiate(weapon.projectile, enemy.transform.position, enemy.transform.rotation);
+                Vector2 aimDirection = player.transform.position - enemy.transform.position;
+                newProjectile.GetComponent<Projectile>().InitializeProjectile(aimDirection, weapon.spread);
+            }
+            fireRateTimer = weapon.fireRate;
+            reloadTimer = weapon.reloadTime;
+        }
 
     }
 

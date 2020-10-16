@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StraightLineProjectile : Projectile
 {
-    public void ProjectileStart()
+    public override void InitializeProjectile(Vector2 aim, float spread)
     {
-
+        aimDirection = aim;
     }
 
     void Update()

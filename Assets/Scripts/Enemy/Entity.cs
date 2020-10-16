@@ -38,6 +38,7 @@ public class Entity : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        print(health);
     }
 
     public void Knockback(Vector2 knockback, float direction)
