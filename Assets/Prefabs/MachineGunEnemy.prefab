@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 5246537582402398474}
   - component: {fileID: 5789242341561929867}
   - component: {fileID: 2686958954788800236}
+  - component: {fileID: 305059641768940507}
   - component: {fileID: 1548499140596511764}
   m_Layer: 10
-  m_Name: Enemy
+  m_Name: MachineGunEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,6 +201,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dec4d226b37bf4f9cfddedf79fb1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &305059641768940507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246537582402398475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80206919054497c4a99851f1e3ec22a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 236bfec4195d15b48953127784f7da0c, type: 2}
 --- !u!95 &1548499140596511764
 Animator:
   serializedVersion: 3

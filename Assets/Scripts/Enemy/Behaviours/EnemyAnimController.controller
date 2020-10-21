@@ -183,4 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597079778a9843243816eac151232d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 8d1b3850cd3fcb240b82d94929c0576c, type: 2}
+  clip: 0
+  fireRateTimer: 0
+  reloadTimer: 0

@@ -15,6 +15,6 @@ MonoBehaviour:
   projectile: {fileID: 7391130662286544741, guid: 9f4d152e10ce14449adae5db794cba1c, type: 3}
   clipSize: 1
   fireRate: 0
-  reloadTime: 3
+  reloadTime: 4
   spread: 1
   projectilesPerShot: 1
