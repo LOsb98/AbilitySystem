@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : StraightLineProjectile
 {
-    public float lifeTimer;
 
     void Update()
     {
@@ -12,7 +11,7 @@ public class Bullet : StraightLineProjectile
         if (lifeTimer <= 0) Destroy(gameObject, 0.0f);
 
         transform.Translate(aimDirection * Time.deltaTime);
-        Collider2D[] collisionbox = Physics2D.OverlapCircleAll(transform.position, hitboxSize, layertoHit);
+        Collider2D[] collisionbox = Physics2D.OverlapCircleAll(transform.position, hitboxSize, layerToHit);
         foreach (var entity in collisionbox)
         {
             //Check which layer the hit object falls under, need to find different component script for player/enemy

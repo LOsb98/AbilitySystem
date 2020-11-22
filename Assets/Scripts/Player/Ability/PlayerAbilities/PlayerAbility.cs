@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class PlayerAbility : MonoBehaviour
 {
     protected PlayerController controller;
+    protected PlayerMelee meleeController;
     public float cooldownTime;
     public float cooldownTimer;
     public bool isActive;

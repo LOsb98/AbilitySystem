@@ -8,7 +8,7 @@ public abstract class PhysicsProjectile : Projectile
 
     //InitializeProjectile will be used to aim and fire the projectile
     //Using an abstract method that will apply to all projectiles
-    public override void InitializeProjectile(Vector2 aim, float spread)
+    public override void InitializeProjectile(Vector2 aim, float spread, int attackLayer)
     {
         //Getting rb component without using Awake() so it can be used in child classes
         rb = GetComponent<Rigidbody2D>();
@@ -17,6 +17,13 @@ public abstract class PhysicsProjectile : Projectile
         aimDirection.y += Random.Range(-spread, spread);
         aimDirection.Normalize();
         rb.velocity = aimDirection * speed;
-        print(rb.velocity);
+        layerToHit = (1 << attackLayer);
+    }
+
+    public override void Deflect(int deflectLayer)
+    {
+        aimDirection *= -1;
+        layerToHit = (1 << deflectLayer);
+        rb.velocity = aimDirection * speed;
     }
 }

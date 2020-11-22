@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 7044642391716608067}
   - component: {fileID: 9184316840555383001}
   - component: {fileID: 1091866055757547505}
+  - component: {fileID: 796421365209455098}
   - component: {fileID: 6852230258800122607}
   - component: {fileID: 1029502343700912618}
-  - component: {fileID: 796421365209455098}
+  - component: {fileID: 6318458365861202427}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -179,17 +180,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfc91fba593a28419bf83a884c57130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugView: 0
   health: 2000
   canMove: 1
   canAttack: 1
   grounded: 0
   moveSpeed: 7
-  jumpForce: 4
+  jumpForce: 8
   groundCheckPos: {fileID: 7002384986184223393}
   groundCheckSize: {x: 0.95, y: 0.1}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  moveDirection: {x: 0, y: 0}
   rb: {fileID: 7044642391716608067}
 --- !u!114 &1091866055757547505
 MonoBehaviour:
@@ -203,38 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dec4d226b37bf4f9cfddedf79fb1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6852230258800122607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044642391716608078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c47ee7a3c8e2b1d41aebe68015c358c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ability1: {fileID: 1029502343700912618}
-  ability2: {fileID: 0}
---- !u!114 &1029502343700912618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7044642391716608078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f28afcc1a890f4aad236e9a168a705, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldownTime: 0.6
-  cooldownTimer: 0
-  isActive: 0
-  dashTime: 0.4
-  dashSpeed: 8
-  dashTimer: 0
 --- !u!114 &796421365209455098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,3 +229,65 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &6852230258800122607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47ee7a3c8e2b1d41aebe68015c358c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1: {fileID: 1029502343700912618}
+  ability2: {fileID: 6318458365861202427}
+--- !u!114 &1029502343700912618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f28afcc1a890f4aad236e9a168a705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 0.2
+  cooldownTimer: 0
+  isActive: 0
+  debugView: 0
+  dashTime: 0.2
+  dashSpeed: 12
+  enemiesHit: []
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  damage: 22
+  knockbackAngle: {x: 3, y: 7}
+  hitboxSize: 1.35
+--- !u!114 &6318458365861202427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044642391716608078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f6458c92019784cb4effa862feafcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 0.8
+  cooldownTimer: 0
+  isActive: 0
+  debugView: 1
+  deflectTime: 1
+  deflectTimer: 0
+  deflectSize: 1.19
+  projDeflected: []
+  projectileLayer:
+    serializedVersion: 2
+    m_Bits: 2048

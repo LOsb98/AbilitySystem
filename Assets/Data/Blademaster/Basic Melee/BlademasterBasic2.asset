@@ -15,5 +15,5 @@ MonoBehaviour:
   damage: 200
   size: {x: 2.25, y: 1.1}
   position: {x: 0.75, y: 0}
-  knockback: {x: 2, y: 0}
+  knockback: {x: 7, y: 2.5}
   endTime: 0.1

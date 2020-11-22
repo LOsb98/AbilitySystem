@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public bool debugView;
+
     [SerializeField]
     private int health;
     private Rigidbody2D rb;
@@ -15,6 +17,8 @@ public class Entity : MonoBehaviour
     public Vector2 groundCheckSize;
     public LayerMask groundLayer;
     public LayerMask playerLayer;
+    public float staggerTime;
+    private float staggerTimer;
 
     void Awake()
     {
@@ -25,7 +29,31 @@ public class Entity : MonoBehaviour
     void Update()
     {
         player = GameObject.Find("Player");
+        if (staggerTimer > 0)
+        {
+            staggerTimer -= Time.deltaTime;
+            animator.SetFloat("StaggerTimer", staggerTimer);
+        }
         animator.SetFloat("PlayerDistance", Vector2.Distance(transform.position, player.transform.position));
+        GroundCheck();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        print("Enemy took " + damage + " damage");
+        if (health <= 0) Destroy(gameObject, 0f);
+        staggerTimer = staggerTime;
+        animator.SetFloat("StaggerTimer", staggerTime);
+    }
+
+    public void Knockback(float knockbackX, float knockbackY)
+    {
+        rb.velocity = new Vector2(knockbackX, knockbackY);
+    }
+
+    private void GroundCheck()
+    {
         Collider2D groundCheck = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0.0f, groundLayer);
         if (!groundCheck)
         {
@@ -35,20 +63,12 @@ public class Entity : MonoBehaviour
         grounded = true;
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        print(health);
-    }
-
-    public void Knockback(Vector2 knockback, float direction)
-    {
-        rb.velocity = new Vector2(knockback.x * direction, knockback.y);
-    }
-
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        if (debugView)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        }
     }
 }

@@ -32,25 +32,17 @@ public class PlayerMelee : MonoBehaviour
 
     public void Attack()
     {
-        if (endTimer > 0)
-        {
-            print("Cannot attack yet");
-            return;
-        }
+        if (endTimer > 0) return;
 
-        if (delayTimer <= 0)
-        {
-            print("Delayed too long, autocombo reset");
-            currentAttack = 0;
-        }
+        if (delayTimer <= 0) currentAttack = 0;
 
         Collider2D[] attackArea = Physics2D.OverlapBoxAll(AsVector2(transform.position) + attackPos, hitboxArray[currentAttack].size, 0.0f, enemyLayer);
         for (int i = 0; i < attackArea.Length; i++)
         {
             attackArea[i].GetComponent<Entity>().TakeDamage(hitboxArray[currentAttack].damage);
-            attackArea[i].GetComponent<Entity>().Knockback(hitboxArray[currentAttack].knockback, transform.localScale.x);
+            attackArea[i].GetComponent<Entity>().Knockback(hitboxArray[currentAttack].knockback.x * transform.localScale.x, hitboxArray[currentAttack].knockback.y);
         }
-        Debug();
+        //Debug();
 
         endTimer = hitboxArray[currentAttack].endTime;
         currentAttack++;

@@ -16,7 +16,7 @@ public class Grenade : PhysicsProjectile
     {
         if (explosionTime > 0) explosionTime -= Time.deltaTime;
 
-        Collider2D collisionbox = Physics2D.OverlapCircle(transform.position, hitboxSize, layertoHit);
+        Collider2D collisionbox = Physics2D.OverlapCircle(transform.position, hitboxSize, layerToHit);
         if (collisionbox)
         {
             Explode();
@@ -26,7 +26,7 @@ public class Grenade : PhysicsProjectile
     private void Explode()
     {
         print("Exploded");
-        Collider2D[] explosion = Physics2D.OverlapCircleAll(transform.position, explosionSize, layertoHit);
+        Collider2D[] explosion = Physics2D.OverlapCircleAll(transform.position, explosionSize, layerToHit);
         foreach (var entity in explosion)
         {
             //Check which layer the hit object falls under, need to find different component script for player/enemy

@@ -36,9 +36,9 @@ public class AbilityCooldown : MonoBehaviour
             ability1.cooldownTimer -= Time.deltaTime;
         }
 
-        //if (ability2.cooldownTimer > 0)
-        //{
-        //    ability2.cooldownTimer -= Time.deltaTime;
-        //}
+        if (ability2.cooldownTimer > 0)
+        {
+            ability2.cooldownTimer -= Time.deltaTime;
+        }
     }
 }

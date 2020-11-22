@@ -41,7 +41,7 @@ public class EnemyShootState : StateMachineBehaviour
             {
                 GameObject newProjectile = Instantiate(weapon.projectile, enemy.transform.position, enemy.transform.rotation);
                 Vector2 aimDirection = player.transform.position - enemy.transform.position;
-                newProjectile.GetComponent<Projectile>().InitializeProjectile(aimDirection, weapon.spread);
+                newProjectile.GetComponent<Projectile>().InitializeProjectile(aimDirection, weapon.spread, 9);
             }
             clip--;
             if (clip > 0)

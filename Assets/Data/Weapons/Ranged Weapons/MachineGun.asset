@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad053c9a9584434f91144746cdc1de1, type: 3}
   m_Name: MachineGun
   m_EditorClassIdentifier: 
-  projectile: {fileID: 339450359190804579, guid: 162bf9ca43f7ca445bb468d33f2ebd72, type: 3}
+  projectile: {fileID: 339450359190804579, guid: 712f3f2585bae97459e08e356a896302, type: 3}
   clipSize: 4
   fireRate: 0.2
   reloadTime: 3

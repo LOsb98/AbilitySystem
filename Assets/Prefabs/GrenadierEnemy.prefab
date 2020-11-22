@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f07bdae0b18224daec22afaca503e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugView: 0
   health: 1000
   speed: 3
   grounded: 0
@@ -189,6 +190,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
+  staggerTime: 0.6
 --- !u!114 &2686958954788800236
 MonoBehaviour:
   m_ObjectHideFlags: 0

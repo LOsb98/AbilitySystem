@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool debugView;
+
     public int health;
     public bool canMove;
     public bool canAttack;
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput controls;
     private PlayerMelee meleeController;
     private MoveController movementController;
-    private Vector2 moveDirection;
+    public Vector2 moveDirection;
     public Rigidbody2D rb;
 
     void Awake()
@@ -90,21 +92,7 @@ public class PlayerController : MonoBehaviour
         PlayerMovementCheck();
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
-    }
 
-    void OnEnable()
-    {
-        controls.Gameplay.Enable();
-    }
-
-    void OnDisable()
-    {
-        controls.Gameplay.Disable();
-    }
 
     private void DirectionCheck()
     {
@@ -148,6 +136,26 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        print(health);
+        print("Player took " + damage + " damage");
+        if (health <= 0) Destroy(gameObject, 0f);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (debugView)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        }
+    }
+
+    void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Gameplay.Disable();
     }
 }
